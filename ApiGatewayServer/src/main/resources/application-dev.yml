@@ -1,0 +1,40 @@
+server:
+  port: 8100
+
+spring:
+  devtools:
+    remote:
+      restart:
+        enabled: true
+    livereload:
+      enabled: true
+  cloud:
+    gateway:
+      routes:
+        - id: customer-api
+          uri: http://127.0.0.1:8101
+          predicates:
+            - Path=/customer/**
+          filters:
+            - TokenTranslationFilterFactory
+
+        - id: account-api
+          uri: http://127.0.0.1:8102
+          predicates:
+            - Path=/account/**
+          filters:
+            - TokenTranslationFilterFactory
+
+        - id: saving-api
+          uri: http://127.0.0.1:8103
+          predicates:
+            - Path=/saving/**
+          filters:
+            - TokenTranslationFilterFactory
+
+        - id: vdebit
+          uri: http://127.0.0.1:8104
+          predicates:
+            - Path=/vdebit/**
+          filters:
+            - TokenTranslationFilterFactory
